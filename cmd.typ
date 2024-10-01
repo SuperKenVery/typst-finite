@@ -115,32 +115,31 @@
     // Transitions don't need to be layed out
     for (from, transitions) in spec.transitions {
       if is.dict(transitions) {
-        for (to, inputs) in transitions {
-          let name = from + "-" + to
-
-          // preapre inputs (may be a string or int)
+        for (to, inputs) in transitions{
           if inputs == none {
             inputs = ()
           } else if not is.arr(inputs) {
-            inputs = str(inputs).split(",")
+            inputs = (inputs,)
           }
 
-          // prepare label
-          let label = labels.at(
-            name, default: input-format(inputs)
-          )
-          if is.dict(label) and "text" not in label {
-            label.text = input-format(inputs)
-          }
+          for input in inputs {
+            // prepare label
+            let name = from + "-" + to + "-" + str(input)
+            let label = labels.at(name, default: input)
 
-          // create transition
-          transition(
-            from,
-            to,
-            inputs: inputs,
-            label: label,
-            ..style.at(name, default:(:))
-          )
+            if is.dict(label) and "text" not in label {
+              label.text = input
+            }
+
+            // create transition
+            transition(
+              from,
+              to,
+              inputs: input,
+              label: label,
+              ..style.at(name, default:(:))
+            )
+          }
         }
       }
     }

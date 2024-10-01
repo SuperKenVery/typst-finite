@@ -1,6 +1,6 @@
 
-#import "@local/mantys:0.1.0": *
-#import "@local/tidy:0.2.0"
+#import "@preview/mantys:0.1.4": *
+#import "@preview/tidy:0.2.0"
 
 #import "@preview/cetz:0.1.1"
 #import "finite.typ"
